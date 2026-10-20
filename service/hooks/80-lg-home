@@ -1,0 +1,24 @@
+#!/bin/sh
+# Hook de arranque (Homebrew init.d): si LG Home es el inicio, la lanza al encender.
+# No hace nada si defaultApps.home no es com.lghome.app.
+APP=com.lghome.app
+LOG=/tmp/lg-home-boot.log
+
+(
+  i=0
+  while [ "$i" -lt 30 ]; do
+    if luna-send -n 1 -w 3000 luna://com.webos.applicationManager/getForegroundAppInfo '{}' 2>/dev/null | grep -q '"returnValue":true'; then
+      break
+    fi
+    i=$((i + 1))
+    sleep 2
+  done
+  echo "$(date) applicationManager listo tras $i intentos" >> "$LOG"
+
+  HOME_APP=$(luna-send -n 1 -w 5000 luna://com.webos.settingsservice/getSystemSettings '{"category":"general","keys":["defaultApps"]}' 2>/dev/null | sed -n 's/.*"home" *: *"\([^"]*\)".*/\1/p')
+  echo "$(date) defaultApps.home=$HOME_APP" >> "$LOG"
+  if [ "$HOME_APP" = "$APP" ]; then
+    luna-send -n 1 -w 8000 luna://com.webos.applicationManager/launch '{"id":"'"$APP"'","params":{"reason":"boot"}}' >> "$LOG" 2>&1
+  fi
+) </dev/null >/dev/null 2>&1 &
+exit 0

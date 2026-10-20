@@ -1,0 +1,6 @@
+{
+  "name": "com.lghome.app.service",
+  "version": "0.1.0",
+  "description": "Servicio de LG Home",
+  "main": "index.js"
+}

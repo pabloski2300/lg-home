@@ -1,0 +1,14 @@
+{
+  "entity_id": "media_player.spotify",
+  "state": "playing",
+  "attributes": {
+    "media_content_type": "music",
+    "media_duration": 215,
+    "media_position": 42,
+    "media_title": "Chandelier",
+    "media_artist": "Sia",
+    "media_album_name": "1000 Forms of Fear",
+    "entity_picture": "/api/media_player_proxy/media_player.spotify?token=REDACTED&cache=0123456789abcdef",
+    "friendly_name": "Spotify"
+  }
+}

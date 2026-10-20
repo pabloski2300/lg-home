@@ -1,0 +1,339 @@
+/* LG Home · pantalla principal. Chrome 68: sin gap en flex, inset, aspect-ratio
+   ni backdrop-filter. El cristal usa una miniatura del fondo ampliada (--frost). */
+
+@font-face { font-family: 'Inter'; font-weight: 200; font-style: normal; src: url(assets/fonts/Inter-ExtraLight.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-weight: 400; font-style: normal; src: url(assets/fonts/Inter-Regular.woff2) format('woff2'); }
+@font-face { font-family: 'Inter'; font-weight: 600; font-style: normal; src: url(assets/fonts/Inter-SemiBold.woff2) format('woff2'); }
+
+:root { --frost: none; }
+
+html, body {
+  margin: 0; width: 1920px; height: 1080px; overflow: hidden;
+  background: #0b0d12; color: #fff;
+  font-family: 'Inter', 'LG Smart UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+#app { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+
+/* ---------- Escena ---------- */
+.scene-root { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.bg {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity 2s ease;
+}
+.bg.on { opacity: 1; }
+.shade {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  background:
+    linear-gradient(180deg, rgba(4,6,12,.50) 0%, rgba(4,6,12,.22) 24%, rgba(4,6,12,0) 40%,
+      rgba(4,6,12,0) 56%, rgba(4,6,12,.22) 74%, rgba(4,6,12,.55) 100%);
+}
+
+/* ---------- Reloj ---------- */
+.clock-wrap {
+  position: absolute; left: 0; top: 58px; width: 1920px; text-align: center;
+  text-shadow: 0 2px 30px rgba(0,0,0,.35);
+}
+.clock-time {
+  font-weight: 200; font-size: 170px; line-height: 1; letter-spacing: .025em;
+  padding-left: .025em; /* compensa el espaciado tras el último dígito */
+  font-feature-settings: 'tnum' 1;
+}
+.clock-time { position: relative; display: inline-block; }
+.clock-ap { position: absolute; left: 100%; bottom: 14px; font-size: 44px; font-weight: 400; letter-spacing: .04em; white-space: nowrap; opacity: .9; }
+.clock-date {
+  margin-top: 10px; font-weight: 400; font-size: 34px; letter-spacing: .06em;
+  padding-left: .06em; opacity: .95;
+  text-shadow: 0 1px 3px rgba(0,0,0,.45), 0 2px 22px rgba(0,0,0,.45);
+}
+
+/* ---------- Cristal ---------- */
+.frost {
+  /* foto del fondo (miniatura) ampliada y de verdad desenfocada; sobresale 40px por
+     cada lado para que el borde difuminado quede fuera (lo recorta clip-path). */
+  position: absolute; left: -40px; top: -40px; width: calc(100% + 80px); height: calc(100% + 80px);
+  background-image: var(--frost);
+  background-size: 1920px 1080px; background-repeat: no-repeat;
+  -webkit-filter: blur(22px); filter: blur(22px);
+  clip-path: inset(40px round var(--r, 30px)); /* recorta al tamaño real de la pieza */
+}
+.dock { --r: 38px; } .tile { --r: 28px; } .pill { --r: 33px; } .weather { --r: 30px; }
+.frost-tint {
+  position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: inherit;
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.03)),
+    linear-gradient(rgba(14,18,32,.58), rgba(14,18,32,.58));
+}
+.dock, .tile, .pill {
+  position: relative;
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.16);
+}
+
+/* ---------- Zona inferior: entradas + dock ---------- */
+.bottom { position: absolute; left: 0; bottom: 54px; width: 1920px; }
+.inputs { display: flex; justify-content: center; margin-bottom: 30px; }
+.dock-wrap { text-align: center; }
+
+.pill {
+  display: flex; align-items: center;
+  height: 64px; padding: 0 32px 0 26px; margin: 0 12px;
+  border-radius: 33px; font-size: 26px; white-space: nowrap;
+  box-shadow: 0 8px 26px rgba(0,0,0,.22);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.pill .pi { position: relative; width: 30px; height: 30px; margin-right: 14px; opacity: .95; }
+.pill .pt { position: relative; font-weight: 600; letter-spacing: .01em; }
+.pill .ps { position: relative; margin-left: 12px; opacity: .72; }
+.pill .ps:before { content: '·'; margin-right: 12px; }
+
+.dock {
+  display: inline-flex; padding: 20px 22px; border-radius: 38px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.30);
+}
+.dock > .frost-tint { background-image: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.03)), linear-gradient(rgba(14,18,32,.5), rgba(14,18,32,.5)); }
+.tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  width: 188px; height: 180px; margin: 0 10px; border-radius: 28px;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.tile .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.06)),
+    linear-gradient(rgba(14,18,32,.5), rgba(14,18,32,.5));
+}
+.tile .num {
+  position: absolute; left: 17px; top: 12px;
+  font-size: 20px; font-weight: 600; opacity: .5;
+}
+.tile .ic {
+  position: relative; width: 104px; height: 104px; margin-bottom: 14px;
+  border-radius: 24px; box-shadow: 0 8px 20px rgba(0,0,0,.35);
+}
+.tile .ic img { display: block; width: 104px; height: 104px; }
+.tile .label { position: relative; font-size: 25px; font-weight: 400; letter-spacing: .01em; }
+
+/* ---------- Foco: visible desde el sofá ---------- */
+.tile.focused, .pill.focused {
+  border-color: #fff;
+  box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45);
+}
+.tile.focused { transform: scale(1.08); }
+.pill.focused { transform: scale(1.07); }
+.tile.focused .frost-tint, .pill.focused .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.14)),
+    linear-gradient(rgba(18,22,36,.2), rgba(18,22,36,.2));
+}
+.tile.focused .label { font-weight: 600; }
+.tile.focused .num { opacity: .85; }
+
+/* ---------- El tiempo ---------- */
+/* el contenedor es a la vez la tarjeta: debe seguir siendo absolute */
+.weather-wrap { position: absolute; left: 60px; top: 58px; }
+.weather {
+  padding: 22px 26px 20px; border-radius: 30px; display: inline-block;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: 0 14px 44px rgba(0,0,0,.26);
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+.wx-city { position: relative; font-size: 24px; font-weight: 600; opacity: .85; letter-spacing: .02em; margin-bottom: 6px; }
+.wx-body { position: relative; display: flex; align-items: flex-end; }
+.wx-now { width: 200px; margin-right: 12px; } /* ancho fijo: la tarjeta no crece con textos largos */
+.wx-temp { font-weight: 200; font-size: 84px; line-height: 1; font-feature-settings: 'tnum' 1; }
+.wx-txt { margin-top: 6px; font-size: 18px; opacity: .88; white-space: nowrap; }
+.wx-desc { display: block; overflow: hidden; text-overflow: ellipsis; }
+.wx-range { display: block; margin-top: 2px; opacity: .8; }
+.wx-days { display: flex; }
+.wx-day { width: 76px; margin-left: 2px; text-align: center; }
+.wx-dow { font-size: 20px; font-weight: 600; letter-spacing: .08em; opacity: .8; }
+.wx-ic { display: block; width: 48px; height: 48px; margin: 4px auto; }
+.wx-dt { font-size: 19px; white-space: nowrap; }
+.wx-dt b { font-weight: 600; }
+.wx-dt span { opacity: .65; }
+
+/* ---------- Más apps: cuadrícula a pantalla completa ---------- */
+.apps {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  --r: 0px; opacity: 0; visibility: hidden;
+  transition: opacity .18s ease, visibility 0s linear .18s;
+}
+.apps.open { opacity: 1; visibility: visible; transition: opacity .18s ease; }
+.apps > .frost-tint {
+  background-image: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)), linear-gradient(rgba(10,14,26,.72), rgba(10,14,26,.72));
+}
+.apps-head {
+  position: absolute; left: 140px; top: 70px; font-size: 44px; font-weight: 600; letter-spacing: .01em;
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+.apps-view { position: absolute; left: 100px; top: 180px; width: 1720px; height: 800px; overflow: hidden; }
+.apps-grid { position: absolute; left: 40px; top: 20px; width: 1640px; -webkit-transition: -webkit-transform .2s ease; transition: transform .2s ease; }
+.app {
+  position: absolute; width: 240px; height: 230px; border-radius: 26px; box-sizing: border-box;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14);
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.app .ic {
+  width: 112px; height: 112px; margin-bottom: 16px; border-radius: 24px; overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,.35); background: rgba(255,255,255,.14);
+  display: flex; align-items: center; justify-content: center; font-size: 54px; font-weight: 600;
+}
+.app .ic img { display: block; width: 112px; height: 112px; object-fit: cover; }
+.app .at {
+  width: 212px; text-align: center; font-size: 24px; letter-spacing: .01em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.app.focused {
+  border-color: #fff; background: rgba(255,255,255,.22); transform: scale(1.07);
+  box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45);
+}
+.app.focused .at { font-weight: 600; }
+.apps-msg {
+  position: absolute; left: 0; top: 500px; width: 1920px; text-align: center;
+  font-size: 30px; opacity: .75;
+}
+.apps-hint { position: absolute; left: 0; bottom: 36px; width: 1920px; text-align: center; font-size: 22px; opacity: .5; }
+
+/* ---------- Volumen (abajo a la derecha) ---------- */
+.volume-wrap { position: absolute; right: 60px; bottom: 54px; }
+.volume {
+  --r: 30px; position: relative; display: flex; align-items: center;
+  width: 250px; height: 60px; padding: 0 22px; border-radius: 30px; font-size: 22px;
+  border: 1px solid rgba(255,255,255,.16); box-shadow: 0 8px 26px rgba(0,0,0,.22);
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.volume .vi { position: relative; flex: none; margin-right: 14px; }
+.volume .vx { display: none; }
+.volume.muted .vx { display: inline; }
+.volume.muted .vw { display: none; }
+.volume .vbar { position: relative; flex: 1; height: 6px; border-radius: 3px; background: rgba(255,255,255,.3); }
+.volume .vfill { height: 100%; border-radius: 3px; background: #fff; }
+.volume.muted .vfill { opacity: .45; }
+.volume .vnum { position: relative; flex: none; width: 44px; overflow: hidden; white-space: nowrap; margin-left: 14px; text-align: right; font-weight: 600; opacity: .85; }
+.volume.focused { border-color: #fff; box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45); transform: scale(1.07); }
+.volume.focused .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.14)),
+    linear-gradient(rgba(18,22,36,.2), rgba(18,22,36,.2));
+}
+
+/* ---------- Engranaje de ajustes (arriba a la derecha) ---------- */
+.gear-wrap { position: absolute; right: 60px; top: 58px; }
+.gear {
+  --r: 32px; position: relative; display: flex; align-items: center; justify-content: center;
+  width: 64px; height: 64px; border-radius: 32px; box-sizing: border-box;
+  border: 1px solid rgba(255,255,255,.16); box-shadow: 0 8px 26px rgba(0,0,0,.22);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.gear .gi { position: relative; opacity: .92; }
+.gear.focused { border-color: #fff; box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45); transform: scale(1.1); }
+.gear.focused .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.14)),
+    linear-gradient(rgba(18,22,36,.2), rgba(18,22,36,.2));
+}
+
+/* ---------- Seguir viendo (Jellyfin) ---------- */
+.resume { display: flex; justify-content: center; margin-bottom: 30px; }
+.rcard {
+  --r: 22px; position: relative; width: 210px; height: 190px; margin: 0 8px; border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.16); box-sizing: border-box;
+  box-shadow: 0 8px 26px rgba(0,0,0,.22); text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.rcard .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.15), rgba(255,255,255,.06)),
+    linear-gradient(rgba(14,18,32,.5), rgba(14,18,32,.5));
+}
+.rimg {
+  position: relative; width: 208px; height: 117px; overflow: hidden;
+  border-radius: 21px 21px 0 0; background: #222a3d;
+}
+.rimg.noimg { background-image: linear-gradient(135deg, #3a4a78, #1d2440); }
+.rimg img { display: block; width: 208px; height: 117px; object-fit: cover; }
+.rmin {
+  position: absolute; right: 8px; top: 8px; padding: 2px 9px; border-radius: 12px;
+  font-size: 16px; font-weight: 600; background: rgba(8,10,18,.68);
+}
+.rbar { position: absolute; left: 0; bottom: 0; width: 100%; height: 5px; background: rgba(255,255,255,.3); }
+.rbar > i { display: block; height: 100%; background: #fff; }
+.rtxt { position: relative; padding: 9px 14px 0; }
+.rt { font-size: 20px; font-weight: 600; line-height: 26px; }
+.rs { font-size: 16px; line-height: 22px; opacity: .72; }
+.ell { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rcard.focused {
+  border-color: #fff; transform: scale(1.07);
+  box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45);
+}
+.rcard.focused .frost-tint {
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,.30), rgba(255,255,255,.14)),
+    linear-gradient(rgba(18,22,36,.2), rgba(18,22,36,.2));
+}
+
+/* ---------- Qué suena (Spotify vía Home Assistant) ---------- */
+/* esquina inferior izquierda, a la altura del dock y a su izquierda (el dock empieza en x=517) */
+/* el contenedor es a la vez la tarjeta (como el tiempo) */
+.nowplaying {
+  --r: 26px; position: absolute; left: 60px; bottom: 54px; display: flex; align-items: center; box-sizing: border-box;
+  width: 400px; padding: 14px; border-radius: 26px;
+  border: 1px solid rgba(255,255,255,.16); box-shadow: 0 8px 26px rgba(0,0,0,.22);
+  text-shadow: 0 1px 3px rgba(0,0,0,.35);
+}
+.np-img { position: relative; flex: 0 0 96px; width: 96px; height: 96px; border-radius: 14px; overflow: hidden; background: #222a3d; }
+.np-img.noimg { background-image: linear-gradient(135deg, #1db954, #14532d); }
+.np-img img { display: block; width: 96px; height: 96px; object-fit: cover; }
+.np-txt { position: relative; flex: 1; min-width: 0; margin-left: 18px; }
+.np-t { font-size: 24px; font-weight: 600; line-height: 32px; }
+.np-a { font-size: 20px; line-height: 28px; opacity: .72; }
+
+/* ---------- Modo cuadro ---------- */
+/* Tras unos minutos sin teclas se desvanece todo menos el fondo y la hora (600 ms,
+   PICTURE_FADE_MS en main.ts). Solo opacidad: no cambia el layout ni el cristal. */
+.weather-wrap, .nowplaying-wrap, .volume-wrap, .gear-wrap, .bottom { transition: opacity .6s ease; }
+.picture .weather-wrap, .picture .nowplaying-wrap, .picture .volume-wrap, .picture .gear-wrap, .picture .bottom {
+  opacity: 0; pointer-events: none;
+}
+
+/* ---------- Ajustes: panel lateral derecho ---------- */
+.settings {
+  position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  opacity: 0; visibility: hidden; transition: opacity .18s ease, visibility 0s linear .18s;
+}
+.settings.open { opacity: 1; visibility: visible; transition: opacity .18s ease; }
+.settings-scrim { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; background: rgba(4,6,12,.42); }
+.settings-panel {
+  --r: 0px; position: absolute; left: 1220px; top: 0; width: 700px; height: 1080px; box-sizing: border-box;
+  border-left: 1px solid rgba(255,255,255,.18); text-shadow: 0 1px 3px rgba(0,0,0,.35);
+  -webkit-transform: translateX(80px); transform: translateX(80px);
+  transition: transform .22s ease;
+}
+.settings.open .settings-panel { -webkit-transform: none; transform: none; }
+.settings-panel > .frost-tint {
+  background-image: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0)), linear-gradient(rgba(10,14,26,.74), rgba(10,14,26,.74));
+}
+.settings-head { position: absolute; left: 60px; top: 70px; font-size: 44px; font-weight: 600; letter-spacing: .01em; }
+.settings-rows { position: absolute; left: 50px; top: 190px; width: 600px; }
+.srow {
+  position: relative; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;
+  height: 84px; margin-bottom: 14px; padding: 0 30px; border-radius: 22px; font-size: 28px;
+  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.14);
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+.srow .sval { font-weight: 600; opacity: .92; }
+.srow .sval:before { content: '\2039  '; opacity: .45; }
+.srow .sval:after { content: '  \203A'; opacity: .45; }
+.srow.saction { margin-top: 34px; justify-content: center; font-weight: 600; background: rgba(255,255,255,.14); }
+.srow.disabled { opacity: .4; }
+.srow.focused {
+  border-color: #fff; background: rgba(255,255,255,.22); transform: scale(1.03);
+  box-shadow: 0 0 0 3px #fff, 0 22px 50px rgba(0,0,0,.45);
+}
+.smsg { position: absolute; left: 60px; top: 800px; width: 580px; min-height: 34px; font-size: 24px; line-height: 34px; color: #ffd9a0; }
+.sstatus { position: absolute; left: 60px; bottom: 100px; width: 580px; font-size: 22px; opacity: .72; }
+.settings-hint { position: absolute; left: 60px; bottom: 44px; font-size: 22px; opacity: .5; }

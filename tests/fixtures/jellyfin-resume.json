@@ -1,0 +1,46 @@
+{
+  "_nota": "Fixture SINTETICA escrita a mano siguiendo la forma BaseItemDto de Jellyfin 10.x/12.x (no es una respuesta real).",
+  "Items": [
+    {
+      "Id": "a1b2c3d4e5f60718293a4b5c6d7e8f90",
+      "Name": "La cena del jueves",
+      "Type": "Episode",
+      "SeriesName": "Sobremesa",
+      "ParentIndexNumber": 2,
+      "IndexNumber": 5,
+      "RunTimeTicks": 27000000000,
+      "UserData": { "PlaybackPositionTicks": 9000000000 },
+      "ImageTags": { "Primary": "tagep1" }
+    },
+    {
+      "Id": "b2c3d4e5f60718293a4b5c6d7e8f90a1",
+      "Name": "Viaje al faro",
+      "Type": "Movie",
+      "ProductionYear": 2019,
+      "RunTimeTicks": 54000000000,
+      "UserData": { "PlaybackPositionTicks": 40500000000 },
+      "ImageTags": { "Primary": "tagmv1" }
+    },
+    {
+      "Id": "c3d4e5f60718293a4b5c6d7e8f90a1b2",
+      "Name": "Metraje sin portada",
+      "Type": "Movie",
+      "RunTimeTicks": 36000000000,
+      "UserData": { "PlaybackPositionTicks": 3600000000 },
+      "ImageTags": {}
+    },
+    {
+      "Id": "d4e5f60718293a4b5c6d7e8f90a1b2c3",
+      "Name": "El extraordinario y larguisimo caso del titulo que no cabe en una sola linea de la tarjeta",
+      "Type": "Episode",
+      "SeriesName": "Crónicas de una serie con un nombre también bastante largo",
+      "ParentIndexNumber": 1,
+      "IndexNumber": 12,
+      "RunTimeTicks": 30000000000,
+      "UserData": { "PlaybackPositionTicks": 15000000000 },
+      "ImageTags": { "Primary": "taglong" }
+    }
+  ],
+  "TotalRecordCount": 4,
+  "StartIndex": 0
+}

@@ -1,0 +1,14 @@
+{
+  "id": "com.lghome.app.service",
+  "description": "LG Home service",
+  "services": [
+    {
+      "name": "com.lghome.app.service",
+      "commands": [
+        { "name": "status", "public": true },
+        { "name": "getHome", "public": true },
+        { "name": "setHome", "public": true }
+      ]
+    }
+  ]
+}

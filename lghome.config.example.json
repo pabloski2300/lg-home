@@ -1,0 +1,20 @@
+{
+  "tv": {
+    "host": "192.168.1.50",
+    "mac": "AA:BB:CC:DD:EE:FF",
+    "sshKey": "~/.ssh/id_ed25519_tv"
+  },
+  "weather": {
+    "lat": 40.4168,
+    "lon": -3.7038,
+    "tz": "Europe/Madrid",
+    "city": "Madrid"
+  },
+  "jellyfin": {
+    "url": "http://jellyfin.local:8096"
+  },
+  "ha": {
+    "url": "http://homeassistant.local:8123",
+    "spotifyEntity": "media_player.spotify"
+  }
+}

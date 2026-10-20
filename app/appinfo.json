@@ -1,0 +1,13 @@
+{
+  "id": "com.lghome.app",
+  "version": "0.1.0",
+  "vendor": "LG Home contributors",
+  "type": "web",
+  "main": "index.html",
+  "title": "LG Home",
+  "icon": "icon.png",
+  "largeIcon": "largeIcon.png",
+  "appCategory": ["home"],
+  "disableBackHistoryAPI": true,
+  "resolution": "1920x1080"
+}

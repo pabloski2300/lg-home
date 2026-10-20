@@ -1,0 +1,4 @@
+{
+  "jellyfin": { "url": "http://jellyfin.local:8096", "apiKey": "", "userId": "" },
+  "ha": { "url": "http://homeassistant.local:8123", "token": "", "spotifyEntity": "" }
+}

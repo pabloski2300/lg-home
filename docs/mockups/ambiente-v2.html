@@ -1,0 +1,91 @@
+<h2>C · Ambiente, con lo de Launch Home</h2>
+<p class="subtitle">Fondo de paisaje, reloj grande, el tiempo de los próximos días, entradas como píldoras y un dock de cristal. Debajo, extras que podría añadir: marca los que quieras (puedes marcar varios).</p>
+
+<style>
+  .tv2{aspect-ratio:16/9;width:100%;border-radius:12px;overflow:hidden;position:relative;font-family:Inter,system-ui,sans-serif;color:#fff;
+    background:
+      radial-gradient(ellipse at 70% 115%, #2c1d14 0%, transparent 55%),
+      linear-gradient(180deg,#203a5c 0%,#4a6a8e 32%,#d99a6c 58%,#7a4b3a 72%,#2a1f1c 100%)}
+  .mnt{position:absolute;bottom:22%;left:0;right:0;height:22%;background:linear-gradient(180deg,#3a2e3c,#1d1820);clip-path:polygon(0 70%,12% 35%,22% 55%,35% 15%,48% 50%,58% 30%,70% 60%,82% 25%,92% 50%,100% 40%,100% 100%,0 100%)}
+  .lake{position:absolute;bottom:0;left:0;right:0;height:23%;background:linear-gradient(180deg,#8a5a48,#2a1f22)}
+  .glass{background:rgba(20,22,30,.38);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);border-radius:14px}
+  .ic{width:44%;aspect-ratio:1;border-radius:22%;margin:0 auto 6%;}
+  .dock .t{display:flex;flex-direction:column;justify-content:center;align-items:center;font-size:11px;border-radius:12px;position:relative}
+  .num{position:absolute;top:5px;left:7px;font-size:8px;opacity:.55}
+  .pill{font-size:10px;padding:5px 12px;border-radius:999px}
+  .sel{outline:2px solid #fff;outline-offset:2px;background:rgba(255,255,255,.22)!important}
+</style>
+
+<div class="mockup">
+  <div class="mockup-header">Pantalla de inicio · 1920×1080 en la TV</div>
+  <div class="mockup-body" style="padding:0">
+    <div class="tv2">
+      <div class="mnt"></div><div class="lake"></div>
+
+      <!-- tiempo -->
+      <div class="glass" style="position:absolute;top:5%;left:3.5%;width:30%;padding:1.4% 1.6%;font-size:9px">
+        <div style="opacity:.85;margin-bottom:4px">Madrid</div>
+        <div style="display:flex;gap:8%;align-items:flex-end">
+          <div><div style="font-size:26px;font-weight:300">14°</div><div style="opacity:.8">Despejado · 19° / 8°</div></div>
+          <div style="display:flex;gap:12%;flex:1;justify-content:flex-end;text-align:center;opacity:.9">
+            <div>MAR<br>☀<br>21°</div><div>MIÉ<br>⛅<br>19°</div><div>JUE<br>🌧<br>15°</div><div>VIE<br>⛅<br>17°</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- reloj -->
+      <div style="position:absolute;top:6%;left:0;right:0;text-align:center">
+        <div style="font-size:52px;font-weight:200;letter-spacing:.02em;line-height:1">21:47</div>
+        <div style="font-size:11px;opacity:.85;margin-top:6px">lunes, 20 de octubre</div>
+      </div>
+
+      <!-- ajustes -->
+      <div class="glass" style="position:absolute;top:5%;right:3%;width:3.6%;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:13px">⚙</div>
+
+      <!-- entradas -->
+      <div style="position:absolute;bottom:27%;left:0;right:0;display:flex;justify-content:center;gap:1.2%">
+        <span class="glass pill">🖥 PC · HDMI 2</span>
+        <span class="glass pill">🎮 Switch · HDMI 1</span>
+      </div>
+
+      <!-- dock -->
+      <div class="glass dock" style="position:absolute;bottom:5%;left:27%;right:27%;height:19%;display:grid;grid-template-columns:repeat(4,1fr);gap:3%;padding:1.4% 2%">
+        <div class="t sel"><span class="num">1</span><div class="ic" style="background:#e62117"></div>YouTube</div>
+        <div class="t"><span class="num">2</span><div class="ic" style="background:#1db954"></div>Spotify</div>
+        <div class="t"><span class="num">3</span><div class="ic" style="background:linear-gradient(135deg,#aa5cc3,#00a4dc)"></div>Jellyfin</div>
+        <div class="t"><span class="num">4</span><div class="ic" style="background:#444a58"></div>Más apps</div>
+      </div>
+
+      <!-- volumen -->
+      <div class="glass" style="position:absolute;bottom:6%;right:3%;width:13%;height:4.5%;display:flex;align-items:center;gap:8%;padding:0 1.2%;font-size:9px">🔊<div style="flex:1;height:3px;background:rgba(255,255,255,.3);border-radius:2px"><div style="width:35%;height:100%;background:#fff;border-radius:2px"></div></div></div>
+    </div>
+  </div>
+</div>
+
+<h3 style="margin-top:28px">¿Qué extras le añadimos?</h3>
+<div class="options" data-multiselect>
+  <div class="option" data-choice="jellyfin-seguir" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content"><h3>Seguir viendo (Jellyfin)</h3><p>Una fila encima del dock con lo que dejaste a medias; OK y continúa justo donde lo dejaste.</p></div>
+  </div>
+  <div class="option" data-choice="spotify-sonando" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content"><h3>Qué suena en Spotify</h3><p>Si hay música sonando (aunque sea desde el móvil), portada y canción en una esquina.</p></div>
+  </div>
+  <div class="option" data-choice="casa" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content"><h3>Botones de casa</h3><p>Escenas (Cine, Trabajo…), encender/apagar el ambilight y el aire, vía Home Assistant.</p></div>
+  </div>
+  <div class="option" data-choice="fondos-video" onclick="toggleSelect(this)">
+    <div class="letter">4</div>
+    <div class="content"><h3>Fondos en vídeo</h3><p>Vistas aéreas en movimiento como las del Apple TV, en vez de fotos. Ojo: tu TV tiene poca memoria, puede ir justa.</p></div>
+  </div>
+  <div class="option" data-choice="musica-ambiente" onclick="toggleSelect(this)">
+    <div class="letter">5</div>
+    <div class="content"><h3>Música ambiente</h3><p>Sonido suave mientras estás en la pantalla de inicio, como en Launch Home.</p></div>
+  </div>
+  <div class="option" data-choice="salvapantallas" onclick="toggleSelect(this)">
+    <div class="letter">6</div>
+    <div class="content"><h3>Modo cuadro / salvapantallas</h3><p>Tras un rato sin tocar nada, se ocultan dock y tiempo y queda solo el paisaje con la hora.</p></div>
+  </div>
+</div>
